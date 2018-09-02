@@ -1,6 +1,14 @@
 import java.util.Scanner
 import scala.collection.mutable.ListBuffer
 
+/*
+  Problem: Adding Exits to a Maze
+  Problem Introduction
+  Now you decide to make sure that there are no dead zones in a maze, that is,
+  that at least one exit is reachable from each cell.
+  For this, you find connected components of the corresponding undirected graph and ensure
+  that each component contains an exit cell.
+ */
 class ConnectedComponents(n : Int, m: Int, vertexes : Array[ List[Int] ]) {
 
   var res = 1
