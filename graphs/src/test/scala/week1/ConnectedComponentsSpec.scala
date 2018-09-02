@@ -2,7 +2,7 @@ import org.scalatest.FlatSpec
 
 class ConnectedComponentsSpec extends FlatSpec {
   import SimpleTypeConverter.stringToArray
-  "Path exists" should "return 0" in {
+  "Path exists" should "return 2" in {
     val graph : Array[List[Int]] =
       """
         |4 2
