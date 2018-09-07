@@ -69,20 +69,21 @@ class Acyclicity(n: Int, m:Int, vertexes: Array[List[Int]]) {
   }
 }
 
-class InputReader{
-  val scanner = new Scanner(System.in)
-  def init() = (scanner.nextInt(), scanner.nextInt() )
-  def getGraph(n:Int, m:Int ): Array[List[Int]] = {
-    val vertexes: Array[ListBuffer[Int]] = Array.fill(n)(ListBuffer[Int]())
-    (1 to m).foreach(_ => {
-      val (x, y) = (scanner.nextInt(), scanner.nextInt())
-      vertexes(x - 1).append( y )
-    })
-    vertexes.map(_.toList)
-  }
-}
-
 object Acyclicity {
+
+  class InputReader{
+    val scanner = new Scanner(System.in)
+    def init() = (scanner.nextInt(), scanner.nextInt() )
+    def getGraph(n:Int, m:Int ): Array[List[Int]] = {
+      val vertexes: Array[ListBuffer[Int]] = Array.fill(n)(ListBuffer[Int]())
+      (1 to m).foreach(_ => {
+        val (x, y) = (scanner.nextInt(), scanner.nextInt())
+        vertexes(x - 1).append( y )
+      })
+      vertexes.map(_.toList)
+    }
+  }
+
   def main(args: Array[String]): Unit = {
     val reader = new InputReader()
     val (n,m) = reader.init()
