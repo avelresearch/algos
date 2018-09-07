@@ -13,10 +13,8 @@ import scala.collection.mutable.ListBuffer
  */
 
 class Acyclicity(n: Int, m:Int, vertexes: Array[List[Int]]) {
-
   var d : Int = 0
   val tpOrder : Array[(Int, Int)] = Array.fill(n)( (0, 0) )
-
   def explorer(v : Int) : Unit = {
     def exporerAcc(a: List[Int] ) : Unit = a match {
       case List() => Unit
@@ -43,7 +41,6 @@ class Acyclicity(n: Int, m:Int, vertexes: Array[List[Int]]) {
       }
     } else tpOrder.update(v - 1, (s._1, d))
   }
-
   def explorerAll() : Int = {
     def isDag() : Boolean = {
       val result = vertexes.zipWithIndex.filter(x => x._1.size > 0)
@@ -74,9 +71,7 @@ class Acyclicity(n: Int, m:Int, vertexes: Array[List[Int]]) {
 
 class InputReader{
   val scanner = new Scanner(System.in)
-
   def init() = (scanner.nextInt(), scanner.nextInt() )
-
   def getGraph(n:Int, m:Int ): Array[List[Int]] = {
     val vertexes: Array[ListBuffer[Int]] = Array.fill(n)(ListBuffer[Int]())
     (1 to m).foreach(_ => {
@@ -85,7 +80,6 @@ class InputReader{
     })
     vertexes.map(_.toList)
   }
-
 }
 
 object Acyclicity {
