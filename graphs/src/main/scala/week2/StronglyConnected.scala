@@ -1,6 +1,16 @@
 import java.util.Scanner
 import scala.collection.mutable.ListBuffer
 
+/*
+  Advanced Problem: Checking Whether Any Intersection in a City is Reachable from Any Other
+  Problem Introduction
+  The police department of a city has made all streets one-way.
+  You would like to check whether it is still possible to drive legally from any intersection
+  to any other intersection. For this, you construct a directed graph: vertices are intersections,
+  there is an edge (𝑢, 𝑣) whenever there is a (one-way) street from 𝑢 to 𝑣 in the city.
+  Then, it suffices to check whether all the vertices in the graph lie in the same
+  strongly connected component.
+ */
 class StronglyConnected(n : Int, m: Int, vertexes: Array[List[Int]]) {
   def run() : Int = ???
 }
