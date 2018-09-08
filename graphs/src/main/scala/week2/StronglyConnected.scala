@@ -17,7 +17,6 @@ case class Vertex(pos: Int, outEdges: Array[Int]){
   var index : Option[Int] = None
   var lowlink : Int = 0
   var onStack : Boolean = false
-
   def successors(gv: Array[Vertex]) : Array[Vertex] = outEdges.map(i => gv(i) )
 }
 
@@ -40,11 +39,9 @@ class StronglyConnected(n : Int, m: Int, gv: Array[Vertex]) {
       case None =>
         stronglyConnected(w)
         v.lowlink = Math.min(v.lowlink, w.lowlink)
-      case _ if (w.onStack) =>
-        v.lowlink = Math.min(v.lowlink, w.lowlink)
+      case _ if (w.onStack) => v.lowlink = Math.min(v.lowlink, w.lowlink)
       case _ =>
     })
-
     if (v.index != None && v.index.get == v.lowlink){
       val _scc = new ListBuffer[Vertex]()
       result.append(_scc)
@@ -69,6 +66,7 @@ class StronglyConnected(n : Int, m: Int, gv: Array[Vertex]) {
 }
 
 object StronglyConnected {
+
   class InputReader{
     val scanner = new Scanner(System.in)
     def init() = (scanner.nextInt(), scanner.nextInt() )
@@ -81,6 +79,7 @@ object StronglyConnected {
       vertexes.map(_.toList)
     }
   }
+
   def main(args: Array[String]): Unit = {
     val reader = new InputReader()
     val (n,m) = reader.init()
@@ -89,6 +88,5 @@ object StronglyConnected {
     val scc = new StronglyConnected(n, m, gv )
     val result = scc.run()
     println(result)
-
   }
 }
