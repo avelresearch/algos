@@ -8,5 +8,4 @@ object SimpleTypeConverter {
       .map(_.split(" "))
       .map(a => a.map(_.toInt))
       .map(_.toList)
-
 }
