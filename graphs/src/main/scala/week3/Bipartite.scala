@@ -2,13 +2,15 @@ import java.util.Scanner
 import scala.collection.mutable.ListBuffer
 
 /*
-  Problem: Computing the Minimum Number of Flight Segments
-  Problem Introduction
-  You would like to compute the minimum number of flight segments to get from one city
-  to another one. For this, you construct the following undirected graph:
-  vertices represent cities, there is an edge between two vertices whenever there
-  is a flight between the corresponding two cities.
-  Then, it suffices to find a shortest path from one of the given cities to the other one.
+  Problem: Checking whether a Graph is Bipartite
+ Problem Introduction
+ An undirected graph is called bipartite if its vertices can be split into two parts such that
+ each edge of the graph joins to vertices from different parts. Bipartite graphs arise naturally
+ in applications where a graph is used to model connections between objects of two different
+ types (say, boys and girls; or students and dormitories).
+ An alternative definition is the following: a graph is bipartite
+ if its vertices can be colored with two colors (say, black and white) such that
+ the endpoints of each edge have different colors.
  */
 
 class Bipartite(n: Int, a: Array[List[Int]] ) {
