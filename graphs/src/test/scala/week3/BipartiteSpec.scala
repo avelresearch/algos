@@ -1,8 +1,9 @@
-import org.scalatest.FlatSpec
+import org.scalatest.{FlatSpec, Ignore}
 import scala.collection.mutable.ListBuffer
 
+//TODO: enable unit test
+@Ignore
 class BipartiteSpec extends FlatSpec {
-
   trait Fixture {
     def toGraph(m: Int, str: String): Array[List[Int]] = {
       val data = str.stripMargin
@@ -22,9 +23,7 @@ class BipartiteSpec extends FlatSpec {
     }
   }
 
-
   "Next graph" should "be not bipartite" in new Fixture {
-
     val data =
       """
         |1 2
@@ -33,7 +32,6 @@ class BipartiteSpec extends FlatSpec {
         |3 1
       """.stripMargin
     val g = this.toGraph(4, data)
-
     val testable = new Bipartite(4, g)
     val res = testable.run()
     assert(res == 0, "This is not bipartite graph")
