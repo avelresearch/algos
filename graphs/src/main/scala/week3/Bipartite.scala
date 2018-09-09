@@ -11,34 +11,11 @@ import scala.collection.mutable.ListBuffer
   Then, it suffices to find a shortest path from one of the given cities to the other one.
  */
 
-class BFS(n: Int, a: Array[List[Int]] ) {
-
-  def distance( s: Int, t: Int): Int = {
-    val dist = Array.fill(n)(Int.MaxValue)
-    dist.update(s, 0)
-    def distAcc(q: ListBuffer[Int]): Unit = q match {
-      case a if (a.isEmpty) => Unit
-      case _ => {
-        val u = q.head
-        q -= u
-        a(u).foreach(v => {
-          if (dist(v) == Int.MaxValue) {
-            q += v
-            dist.update(v, dist(u) + 1)
-          }
-        });
-        distAcc(q)
-      }
-    }
-
-    val queue: ListBuffer[Int] = ListBuffer(s)
-    distAcc(queue)
-
-    if (dist(t) == Int.MaxValue) -1 else dist(t)
-  }
+class Bipartite(n: Int, a: Array[List[Int]] ) {
+  def run() : Int = -1
 }
 
-object BFS {
+object Bipartite {
 
   class InputReader {
     val scanner = new Scanner(System.in)
@@ -47,11 +24,11 @@ object BFS {
 
     def getGraph(n: Int, m: Int): Array[ListBuffer[Int]] = {
       val adj: Array[ListBuffer[Int]] = Array.fill(n)(ListBuffer[Int]())
-        for (i <- 1 to m) {
-          val (x, y) = (scanner.nextInt(), scanner.nextInt())
-          adj(x - 1).append(y - 1)
-          adj(y - 1).append(x - 1)
-        }
+      for (i <- 1 to m) {
+        val (x, y) = (scanner.nextInt(), scanner.nextInt())
+        adj(x - 1).append(y - 1)
+        adj(y - 1).append(x - 1)
+      }
       adj
     }
   }
@@ -60,10 +37,11 @@ object BFS {
     val reader = new InputReader()
     val (n, m) = reader.init()
     val adj: Array[ListBuffer[Int]] = reader.getGraph(n, m)
-    val (s, t) = (reader.scanner.nextInt() - 1, reader.scanner.nextInt() - 1)
-    val b = new BFS(n, adj.map(_.toList) )
-    val res = b.distance(s, t)
+
+    val b = new Bipartite(n, adj.map(_.toList) )
+    val res = b.run()
     println(res)
   }
 
 }
+
