@@ -22,9 +22,7 @@ class BfsSpec extends FlatSpec {
     }
   }
 
-
   "Distance between 2 and 4" should "be 2" in new Fixture {
-
     val data =
       """
         |1 2
