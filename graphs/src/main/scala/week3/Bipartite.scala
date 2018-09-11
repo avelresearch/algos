@@ -1,5 +1,7 @@
 import java.util.Scanner
+
 import scala.collection.mutable.ListBuffer
+import scala.collection.mutable
 
 /*
   Problem: Checking whether a Graph is Bipartite
@@ -13,8 +15,18 @@ import scala.collection.mutable.ListBuffer
  the endpoints of each edge have different colors.
  */
 
-class Bipartite(n: Int, a: Array[List[Int]] ) {
-  def run() : Int = -1
+class Bipartite(n: Int, graph: Array[List[Int]] ) {
+  private val color = mutable.Map[Int, Int]()
+
+  def dfs(v: Int, currentColor: Int = 1): Boolean =
+    if ( color.contains(v) ) color(v) == currentColor
+    else {
+      color.update(v, currentColor)
+      graph(v).forall { vertex => dfs(vertex, currentColor = currentColor * -1) }
+    }
+
+  def run(): Int =
+    if ( graph.indices.forall {  vertex => color.contains(vertex) || dfs(vertex) } ) 1 else 0
 }
 
 object Bipartite {
