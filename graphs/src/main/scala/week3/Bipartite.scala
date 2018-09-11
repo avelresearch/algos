@@ -14,15 +14,14 @@ import scala.collection.mutable
  if its vertices can be colored with two colors (say, black and white) such that
  the endpoints of each edge have different colors.
  */
-
 class Bipartite(n: Int, graph: Array[List[Int]] ) {
   private val color = mutable.Map[Int, Int]()
 
-  def dfs(v: Int, currentColor: Int = 1): Boolean =
-    if ( color.contains(v) ) color(v) == currentColor
+  private def dfs(v: Int, cc: Int = 1): Boolean =
+    if ( color.contains(v) ) color(v) == cc
     else {
-      color.update(v, currentColor)
-      graph(v).forall { vertex => dfs(vertex, currentColor = currentColor * -1) }
+      color.update(v, cc)
+      graph(v).forall { vertex => dfs(vertex, cc = cc * -1 ) }
     }
 
   def run(): Int =

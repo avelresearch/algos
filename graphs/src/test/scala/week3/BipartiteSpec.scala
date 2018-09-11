@@ -1,7 +1,7 @@
 import org.scalatest.{FlatSpec, Ignore}
 import scala.collection.mutable.ListBuffer
 
-//TODO: enable unit test
+//TODO: still failing one test
 class BipartiteSpec extends FlatSpec {
 
   trait Fixture {
@@ -35,6 +35,20 @@ class BipartiteSpec extends FlatSpec {
     val testable = new Bipartite(4, g)
     val res = testable.run()
     assert(res == 0, "This is not bipartite graph")
+  }
+
+  "Next graph" should "be  bipartite" in new Fixture {
+    val data =
+      """
+        |5 2
+        |4 2
+        |3 4
+        |1 4
+      """.stripMargin
+    val g = this.toGraph(5, data)
+    val testable = new Bipartite(5, g)
+    val res = testable.run()
+    assert(res == 1, "This be bipartite graph")
   }
 
 }
