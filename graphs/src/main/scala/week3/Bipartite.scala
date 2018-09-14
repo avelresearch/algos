@@ -1,7 +1,9 @@
 import java.util.Scanner
 
+import BipartiteTypes._
+
+import scala.collection.immutable.Queue
 import scala.collection.mutable.ListBuffer
-import scala.collection.mutable
 
 /*
   Problem: Checking whether a Graph is Bipartite
@@ -14,18 +16,39 @@ import scala.collection.mutable
  if its vertices can be colored with two colors (say, black and white) such that
  the endpoints of each edge have different colors.
  */
-class Bipartite(n: Int, graph: Array[List[Int]] ) {
-  private val color = mutable.Map[Int, Int]()
+object BipartiteTypes {
+  type Edges = IndexedSeq[Seq[Int]]
+  sealed trait Color
+  case object Uncolored extends Color
+  case object Black extends Color
+  case object White extends Color
+}
 
-  private def dfs(v: Int, cc: Int = 1): Boolean =
-    if ( color.contains(v) ) color(v) == cc
-    else {
-      color.update(v, cc)
-      graph(v).forall { vertex => dfs(vertex, cc = cc * -1 ) }
+class Bipartite(es : Edges){
+  private var cs : IndexedSeq[Color] = IndexedSeq.fill[Color](es.size)(Uncolored)
+
+  private def swap(c : Color) : Color = c match {
+    case Black => White
+    case White => Black
+    case _ => ???
+  }
+
+  def run() : Boolean = {
+    var q : Queue[Int] = Queue(1)
+    cs = cs.updated(1, Black)
+    while (q.nonEmpty) {
+      var (node, n) = q.dequeue
+      es(node).foreach{ nbr =>
+        val neighbourColor = swap( cs(node) )
+        if (cs(nbr) == Uncolored) {
+          cs = cs.updated(nbr, neighbourColor)
+          n = n.enqueue(nbr)
+        } else if (cs(nbr) != neighbourColor) return false
+      }
+      q = n
     }
-
-  def run(): Int =
-    if ( graph.indices.forall {  vertex => color.contains(vertex) || dfs(vertex) } ) 1 else 0
+    true
+  }
 }
 
 object Bipartite {
@@ -51,9 +74,9 @@ object Bipartite {
     val (n, m) = reader.init()
     val adj: Array[ListBuffer[Int]] = reader.getGraph(n, m)
 
-    val b = new Bipartite(n, adj.map(_.toList) )
+    val b = new Bipartite( adj.map(_.toList) )
     val res = b.run()
-    println(res)
+    println( if (res) 1 else 0 )
   }
 
 }

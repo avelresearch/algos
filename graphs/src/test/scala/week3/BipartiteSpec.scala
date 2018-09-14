@@ -32,9 +32,9 @@ class BipartiteSpec extends FlatSpec {
         |3 1
       """.stripMargin
     val g = this.toGraph(4, data)
-    val testable = new Bipartite(4, g)
+    val testable = new Bipartite( g)
     val res = testable.run()
-    assert(res == 0, "This is not bipartite graph")
+    assert(res == false, "This is not bipartite graph")
   }
 
   "Next graph" should "be  bipartite" in new Fixture {
@@ -46,9 +46,9 @@ class BipartiteSpec extends FlatSpec {
         |1 4
       """.stripMargin
     val g = this.toGraph(5, data)
-    val testable = new Bipartite(5, g)
+    val testable = new Bipartite( g)
     val res = testable.run()
-    assert(res == 1, "This be bipartite graph")
+    assert(res == true, "This be bipartite graph")
   }
 
 }
