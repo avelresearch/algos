@@ -1,7 +1,15 @@
-import org.scalatest.{FlatSpec}
+import org.scalatest.FlatSpec
+
 import scala.collection.mutable.ListBuffer
 
-class DijkstraSpec extends FlatSpec {
+/*
+4 4
+1 2 -5
+4 1 2
+2 3 2
+3 1 1
+ */
+class NegativeCycleSpec extends FlatSpec {
   type Edges = Array[List[Int]]
 
   trait Fixture {
@@ -28,15 +36,14 @@ class DijkstraSpec extends FlatSpec {
   "Next graph" should "be not bipartite" in new Fixture {
     val data =
       """
-        |1 2 1
+        |1 2 -5
         |4 1 2
         |2 3 2
-        |1 3 5
+        |3 1 1
       """.stripMargin
-    val (s, t)= (0, 2)
     val (adj, cost) = this.toGraph(4, data)
-    val testable = new Dijkstra(4, adj, cost)
-    val res = testable.distance(s, t)
-    assert(res == 3, "Distance should be 3")
+    val testable = new NegativeCycle(4, 4, adj, cost)
+    val res = testable.run()
+    assert(res == 1, "Distance should be 6")
   }
 }

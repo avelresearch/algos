@@ -8,10 +8,8 @@ object DijkstraTypes {
 }
 
 class Dijkstra(n: Int, adj: Edges, cost: Edges) {
-
   private val INFINITY = Int.MaxValue / 2
   private val UNDEFINED = Int.MaxValue / 5
-
   private case class Queue(s: Int) {
     def isEmpty = items.isEmpty
     val items: ListBuffer[QueueItem] =
@@ -28,7 +26,6 @@ class Dijkstra(n: Int, adj: Edges, cost: Edges) {
       }
     }
   }
-
   def distance(s: Int, t: Int): Int = {
     val dist: Array[Int] = Array.fill(n)(INFINITY)
     val prev: Array[Int] = Array.fill(n)(INFINITY)
@@ -45,7 +42,6 @@ class Dijkstra(n: Int, adj: Edges, cost: Edges) {
         relax(tail, costU.tail, u)
       }
     }
-
     dist(s) = 0
     while (queue.isEmpty == false) {
       val u = queue.extractMin()
@@ -58,9 +54,7 @@ class Dijkstra(n: Int, adj: Edges, cost: Edges) {
 object Dijkstra {
   class InputReader {
     val scanner = new Scanner(System.in);
-
     def init() = (scanner.nextInt(), scanner.nextInt())
-
     def getGraph(m: Int, n: Int): (Edges, Edges) = {
       val cost: Array[ListBuffer[Int]] = Array.fill(n)(ListBuffer[Int]())
       val adj: Array[ListBuffer[Int]] = Array.fill(n)(ListBuffer[Int]())
