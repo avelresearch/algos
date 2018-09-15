@@ -37,4 +37,19 @@ class ConnectingPointsSpec extends FlatSpec {
     val res = testable.minimumDistance()
     assert(res == 3.0000, "Minimum total length of segment should be: 3.000000000")
   }
+
+  "Minumule legth of segment" should "be 7.0644" in new Fixture {
+    val data =
+      """
+        |0 0
+        |0 2
+        |1 1
+        |3 0
+        |3 2
+      """.stripMargin
+    val (x, y) = this.toGraph(5, data)
+    val testable = new ConnectingPoints(5, x, y)
+    val res = testable.minimumDistance()
+    assert(res == 7.06449510224598, "Minimum total length of segment should be: 7.0644")
+  }
 }
