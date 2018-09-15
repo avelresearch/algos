@@ -1,8 +1,11 @@
 import org.scalatest.{FlatSpec, Ignore}
+
 import scala.collection.mutable.ListBuffer
 
+//TODO: implement unit test
 @Ignore
-class ShortestPathsSpec extends FlatSpec {
+class ConnectingPointsSpec extends FlatSpec {
+  /*
   type Edges = Array[List[Int]]
 
   trait Fixture {
@@ -39,5 +42,5 @@ class ShortestPathsSpec extends FlatSpec {
     val res = testable.run()
     assert(res == 4, "Distance should be 4")
   }
-
+  */
 }
