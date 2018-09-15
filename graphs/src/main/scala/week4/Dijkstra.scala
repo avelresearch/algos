@@ -2,6 +2,14 @@ import java.util.Scanner
 import DijkstraTypes.{Edges, QueueItem}
 import scala.collection.mutable.ListBuffer
 
+/*
+  Problem: Computing the Minimum Cost of a Flight
+  Problem Introduction
+  Now, you are interested in minimizing not the number of segments,
+  but the total cost of a flight. For this you construct a weighted graph:
+  the weight of an edge from one city to another one is the cost of the corresponding flight.
+ */
+
 object DijkstraTypes {
   type Edges = Array[List[Int]]
   type QueueItem = (Int, Int)
