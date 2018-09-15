@@ -1,15 +1,9 @@
 import org.scalatest.{FlatSpec, Ignore}
 
-import scala.collection.mutable.ListBuffer
-
-//TODO: implement unit test
-@Ignore
 class ConnectingPointsSpec extends FlatSpec {
-  /*
-  type Edges = Array[List[Int]]
 
   trait Fixture {
-    def toGraph(n: Int, str: String): (Edges, Edges) = {
+    def toGraph(n: Int, str: String): (Array[Int], Array[Int]) = {
       val data = str.stripMargin
         .split("\n")
         .map(_.trim())
@@ -17,30 +11,30 @@ class ConnectingPointsSpec extends FlatSpec {
         .map(_.split(" "))
         .map(a => a.map(_.toInt))
 
-      val cost: Array[ListBuffer[Int]] = Array.fill(n)(ListBuffer[Int]())
-      val adj: Array[ListBuffer[Int]] = Array.fill(n)(ListBuffer[Int]())
+      val x: Array[Int] = Array.fill(n)(0)
+      val y: Array[Int] = Array.fill(n)(0)
 
-      data.foreach(p => {
-        val (x, y, z) = (p(0), p(1), p(2))
-        adj(x - 1).append(y - 1)
-        cost(x - 1).append(z)
+      data.zipWithIndex.foreach(p => {
+        val (a, b) = (p._1(0), p._1(1))
+        x(p._2) = a
+        y(p._2) = b
       })
-      (adj.map(_.toList), cost.map(_.toList))
+
+      (x, y)
     }
   }
 
-  "Next graph" should "be not bipartite" in new Fixture {
+  "Minumule legth of segment" should "be 3.0000" in new Fixture {
     val data =
       """
-        |1 2 1
-        |4 1 2
-        |2 3 2
-        |3 1 -5
+        |0 0
+        |0 1
+        |1 0
+        |1 1
       """.stripMargin
-    val (adj, cost) = this.toGraph(4, data)
-    val testable = new ShortestPaths(5, 4, adj, cost)
-    val res = testable.run()
-    assert(res == 4, "Distance should be 4")
+    val (x, y) = this.toGraph(4, data)
+    val testable = new ConnectingPoints(4, x, y)
+    val res = testable.minimumDistance()
+    assert(res == 3.0000, "Minimum total length of segment should be: 3.000000000")
   }
-  */
 }
