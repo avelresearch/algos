@@ -1,7 +1,6 @@
 import org.scalatest.{FlatSpec, Ignore}
 import scala.collection.mutable.ListBuffer
 
-//TODO: still failing one test
 class BipartiteSpec extends FlatSpec {
 
   trait Fixture {
