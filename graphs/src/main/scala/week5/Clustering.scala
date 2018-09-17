@@ -1,79 +1,64 @@
 import Clustering.{ Edges, Point}
 import scala.io.StdIn
 
-class DisjointSet(n : Int) {
-  val parent: Array[Int] = Array.ofDim[Int](n + 1)
-  val rank: Array[Int] = Array.ofDim[Int](n + 1)
-  var pathCompression: Boolean = true
-  var clusters: Int = n
+class Clustering(edges: Edges){
 
-  for (i <- parent.indices.tail) makeSet(i)
+  class DisjointSet(n : Int) {
+    val parent: Array[Int] = Array.ofDim[Int](n + 1)
+    val rank: Array[Int] = Array.ofDim[Int](n + 1)
+    var clusters: Int = n
 
-  def makeSet(i: Int): Unit = {
-    parent(i) = i
-    rank(i) = 0
-  }
+    for (i <- parent.indices.tail) makeSet(i)
 
-  def find(i: Int): Int = {
-    if (pathCompression) {
+    def makeSet(i: Int): Unit = {
+      parent(i) = i
+      rank(i) = 0
+    }
+
+    def find(i: Int): Int = {
       if (i != parent(i)) {
         parent(i) = find(parent(i))
       }
       parent(i)
     }
-    else {
-      var k = i
-      while (k != parent(k)) {
-        k = parent(k)
+
+    def union(i: Int, j: Int): Unit = {
+      val aRoot = find(i)
+      val bRoot = find(j)
+      if (aRoot == bRoot) return
+      if (rank(aRoot) > rank(bRoot))
+        parent(bRoot) = aRoot
+      else {
+        parent(aRoot) = bRoot
+        if (rank(aRoot) == rank(bRoot)) {
+          rank(bRoot) += 1
+        }
       }
-      k
+      clusters -= 1
     }
   }
 
-  def union(i: Int, j: Int): Unit = {
-    val iRoot = find(i)
-    val jRoot = find(j)
-    if (iRoot == jRoot) return
-    if (rank(iRoot) > rank(jRoot)) {
-      parent(jRoot) = iRoot
-    }
-    else {
-      parent(iRoot) = jRoot
-      if (rank(iRoot) == rank(jRoot)) {
-        rank(jRoot) += 1
-      }
-    }
-    clusters -= 1
-  }
-}
+  def run(k : Int) : Double = {
+    val vertices = edges.keys.toIndexedSeq
+    val pointsMaps = vertices.zipWithIndex.toMap
+    val pointsSets = new DisjointSet(vertices.size)
+    vertices.zipWithIndex.foreach { case (_, i) => pointsSets.makeSet(i) }
 
-class Clustering(edges: Edges){
-  def compute(k : Int) : Double = {
-    val indexedVertices = edges.keys.toIndexedSeq
-    val pointToIndexMap = indexedVertices.zipWithIndex.toMap
-    val pointsSets = new DisjointSet(indexedVertices.size)
-    indexedVertices.zipWithIndex.foreach { case (_, i) => pointsSets.makeSet(i) }
+    val sortedPairs = vertices.flatMap { k => edges(k).map((k, _)) }.sortBy {  case (p, q) => Math.abs(p - q)}
 
-    val sortedPairs = indexedVertices.flatMap { k => edges(k).map((k, _)) }.sortBy {
-      case (p, q) => Math.abs(p - q)
-    }
-
-    var minimumSpanningTree : Set[(Point, Point)] = Set.empty
+    var mst : Set[(Point, Point)] = Set.empty
     for ((p, q) <- sortedPairs) {
-      val clusters = pointsSets.clusters
-      if (clusters != k - 1) {
-        val pIndex = pointToIndexMap(p)
-        val qIndex = pointToIndexMap(q)
+      if (pointsSets.clusters != k - 1) {
+        val pIndex = pointsMaps(p)
+        val qIndex = pointsMaps(q)
         if (pointsSets.find(pIndex) != pointsSets.find(qIndex)) {
-          minimumSpanningTree = minimumSpanningTree + Tuple2(p, q)
+          mst = mst + Tuple2(p, q)
           pointsSets.union(pIndex, qIndex)
         }
       }
-      else {
-        return minimumSpanningTree.map { case (p, q) => Math.abs(p - q) }.max
-      }
+      else return mst.map { case (p, q) => Math.abs(p - q) }.max
     }
-
+    // if not distance found
     Double.PositiveInfinity
   }
 }
@@ -90,15 +75,15 @@ object Clustering {
     var allPoints = Set.empty[Point]
 
     for (_ <- 1 to n) {
-      val line = readLineAsInts()
+      val line = readAsInts()
       allPoints = allPoints + Point(line.head, line(1))
     }
     val k = StdIn.readInt
     val edges = allPoints.map(p => (p, allPoints)).toMap
     val c = new Clustering(edges)
-    println(c.compute( k))
+    println(c.run( k))
   }
 
-  def readLineAsInts() : Seq[Int] = StdIn.readLine.trim.split(" ").map(_.toInt)
+  def readAsInts() : Seq[Int] = StdIn.readLine.trim.split(" ").map(_.toInt)
 
 }
