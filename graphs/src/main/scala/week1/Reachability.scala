@@ -1,5 +1,4 @@
 import java.util.Scanner
-
 import scala.collection.mutable.ListBuffer
 
 /*
@@ -64,4 +63,3 @@ object Reachability {
     println(result)
   }
 }
-
